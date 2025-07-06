@@ -13,12 +13,12 @@ spec:
       labels:
         app: hrm-frontend
     spec:
-      containers:
-      - name: frontend
-        image: ringkokabiraj/hrm-frontend:latest
-        ports:
-        - containerPort: 80
-        env:
+     containers:
+       - name: frontend
+     image: ringkokabiraj/hrm-frontend:latest
+     ports:
+       - containerPort: 80
+     env:
         - name: API_URL
           value: "http://backend/employees"
 ---
