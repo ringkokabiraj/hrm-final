@@ -14,30 +14,18 @@ spec:
         app: mysql
     spec:
       containers:
-      - name: mysql
-        image: mysql:8
-        env:
-        - name: MYSQL_ROOT_PASSWORD
-          value: "password"
-        - name: MYSQL_DATABASE
-          value: "hrmdb"
-        ports:
-        - containerPort: 3306
-        volumeMounts:
-        - name: mysql-pv-storage
-          mountPath: /var/lib/mysql
+        - name: mysql
+          image: mysql:8
+          env:
+            - name: MYSQL_ROOT_PASSWORD
+              value: "password"
+            - name: MYSQL_DATABASE
+              value: "hrmdb"
+          ports:
+            - containerPort: 3306
+          volumeMounts:
+            - name: mysql-pv-storage
+              mountPath: /var/lib/mysql
       volumes:
-      - name: mysql-pv-storage
-        emptyDir: {}
----
-apiVersion: v1
-kind: Service
-metadata:
-  name: mysql
-  namespace: hrm
-spec:
-  selector:
-    app: mysql
-  ports:
-  - port: 3306
-    targetPort: 3306
+        - name: mysql-pv-storage
+          emptyDir: {}

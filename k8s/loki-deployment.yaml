@@ -33,4 +33,4 @@ spec:
   ports:
     - port: 3100
       targetPort: 3100
-      nodePort: 31000  # You can change if port is in use
+     

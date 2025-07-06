@@ -58,4 +58,6 @@ jobs:
         run: |
           set -e
           kubectl apply -f k8s/
+          kubectl rollout status deployment/hrm-backend
+          kubectl rollout status deployment/hrm-frontend
           echo "Deployment is Successfull"
