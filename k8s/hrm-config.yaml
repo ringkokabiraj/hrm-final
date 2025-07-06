@@ -4,7 +4,7 @@ metadata:
   name: hrm-config
   namespace: hrm
 data:
-  API_URL: http://backend:8080/employees
+  API_URL: http://backend:80/employees
   DB_HOST: mysql
   DB_NAME: hrmdb
   REDIS_HOST: redis
