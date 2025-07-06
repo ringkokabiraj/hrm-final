@@ -1,29 +1,15 @@
 <?php
-if ($_SERVER['REQUEST_METHOD'] === 'GET' && isset($_GET['id'])) {
-    $id = $_GET['id'];
-    $data = @file_get_contents("http://backend:80/employees/$id");
-    $emp = json_decode($data, true);
-    if (!$emp) {
-        echo "Employee not found.";
-        exit;
-    }
-    ?>
+$apiBase = getenv('API_URL') ?: 'http://backend/employees';
 
-    <h2>Update Employee</h2>
-    <form action="update.php" method="POST">
-        <input type="hidden" name="id" value="<?= $emp['id'] ?>">
-        <label>Name:</label>
-        <input type="text" name="name" value="<?= $emp['name'] ?>" required><br>
-        <label>Role:</label>
-        <input type="text" name="role" value="<?= $emp['role'] ?>" required><br>
-        <input type="submit" value="Update">
-    </form>
+$id = $_GET['id'] ?? null;
+if (!$id) {
+    echo "Missing employee ID.";
+    exit;
+}
 
-    <?php
-} elseif ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    $id = $_POST['id'];
-    $name = $_POST['name'];
-    $role = $_POST['role'];
+if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+    $name = $_POST['name'] ?? '';
+    $role = $_POST['role'] ?? '';
 
     $data = http_build_query(['name' => $name, 'role' => $role]);
     $options = [
@@ -33,17 +19,37 @@ if ($_SERVER['REQUEST_METHOD'] === 'GET' && isset($_GET['id'])) {
             'content' => $data
         ]
     ];
-
     $context = stream_context_create($options);
-    $response = @file_get_contents("http://backend:80/employees/$id", false, $context);
+    $result = @file_get_contents("$apiBase/$id", false, $context);
 
-    if ($response !== false) {
-        header("Location: /");
+    if ($result !== false) {
+        header("Location: index.php");
         exit;
     } else {
         echo "Update failed.";
+        exit;
     }
 } else {
-    echo "Invalid request.";
+    // GET request to fetch employee data
+    $employeeJson = @file_get_contents("$apiBase/$id");
+    $employee = $employeeJson ? json_decode($employeeJson, true) : null;
+
+    if (!$employee) {
+        echo "Employee not found.";
+        exit;
+    }
+    ?>
+    <!DOCTYPE html>
+    <html>
+    <head><title>Edit Employee</title></head>
+    <body>
+        <h1>Edit Employee #<?= htmlspecialchars($employee['id']) ?></h1>
+        <form method="post">
+            Name: <input type="text" name="name" value="<?= htmlspecialchars($employee['name']) ?>"><br><br>
+            Role: <input type="text" name="role" value="<?= htmlspecialchars($employee['role']) ?>"><br><br>
+            <input type="submit" value="Update">
+        </form>
+    </body>
+    </html>
+<?php
 }
-?>

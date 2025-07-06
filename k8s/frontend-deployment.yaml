@@ -4,7 +4,7 @@ metadata:
   name: hrm-frontend
   namespace: hrm
 spec:
-  replicas: 2
+  replicas: 1
   selector:
     matchLabels:
       app: hrm-frontend
