@@ -10,7 +10,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['id'])) {
     ];
 
     $context = stream_context_create($options);
-    $response = @file_get_contents("http://backend:80/employees/$id", false, $context);
+    $response = @file_get_contents("http://backend/employees/$id", false, $context);
 
     if ($response !== false) {
         header("Location: /");
