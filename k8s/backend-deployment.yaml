@@ -17,7 +17,7 @@ spec:
         - name: backend
           image: ringkokabiraj/hrm-backend:latest
           ports:
-            - containerPort: 80
+            - containerPort: 8080
           envFrom:
             - configMapRef:
                 name: hrm-config
@@ -36,5 +36,5 @@ spec:
   ports:
     - protocol: TCP
       port: 80
-      targetPort: 80
+      targetPort: 8080
       nodePort: 30157
