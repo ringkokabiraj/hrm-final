@@ -1,7 +1,7 @@
 <?php
 if ($_SERVER['REQUEST_METHOD'] === 'GET' && isset($_GET['id'])) {
     $id = $_GET['id'];
-    $data = @file_get_contents("http://backend:8080/employees/$id");
+    $data = @file_get_contents("http://backend:80/employees/$id");
     $emp = json_decode($data, true);
     if (!$emp) {
         echo "Employee not found.";
