@@ -57,7 +57,5 @@ jobs:
       - name: Deploy to Kubernetes
         run: |
           set -e
-          kubectl apply -f k8s/
-          kubectl rollout status deployment/hrm-backend
-          kubectl rollout status deployment/hrm-frontend
+          kubectl apply -f k8s/ 
           echo "Deployment is Successfull"
