@@ -1,1 +1,38 @@
-# K8s frontend deployment YAML
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: hrm-frontend
+  namespace: hrm
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: hrm-frontend
+  template:
+    metadata:
+      labels:
+        app: hrm-frontend
+    spec:
+      containers:
+      - name: frontend
+        image: ringkokabiraj/hrm-frontend:latest
+        ports:
+        - containerPort: 80
+        env:
+        - name: API_URL
+          value: "http://backend/employees"
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: frontend
+  namespace: hrm
+spec:
+  selector:
+    app: hrm-frontend
+  ports:
+  - protocol: TCP
+    port: 80
+    targetPort: 80
+    nodePort: 30080
+  type: NodePort

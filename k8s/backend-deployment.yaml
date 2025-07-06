@@ -1,1 +1,44 @@
-# K8s backend deployment YAML
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: hrm-backend
+  namespace: hrm
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: hrm-backend
+  template:
+    metadata:
+      labels:
+        app: hrm-backend
+    spec:
+      containers:
+      - name: backend
+        image: ringkokabiraj/hrm-backend:latest
+        ports:
+        - containerPort: 80
+        env:
+        - name: DB_HOST
+          value: "mysql"
+        - name: DB_USER
+          value: "root"
+        - name: DB_PASSWORD
+          value: "password"
+        - name: DB_NAME
+          value: "hrmdb"
+        - name: REDIS_HOST
+          value: "redis"
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: backend
+  namespace: hrm
+spec:
+  selector:
+    app: hrm-backend
+  ports:
+  - protocol: TCP
+    port: 80
+    targetPort: 80
