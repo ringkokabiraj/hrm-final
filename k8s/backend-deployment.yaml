@@ -14,11 +14,11 @@ spec:
         app: hrm-backend
     spec:
       containers:
-      - name: backend
-        image: ringkokabiraj/hrm-backend:latest
+       - name: backend
+      image: ringkokabiraj/hrm-backend:latest
         ports:
         - containerPort: 80
-        env:
+      env:
         - name: DB_HOST
           value: "mysql"
         - name: DB_USER
@@ -41,4 +41,4 @@ spec:
   ports:
   - protocol: TCP
     port: 80
-    targetPort: 80
+    targetPort: 8080

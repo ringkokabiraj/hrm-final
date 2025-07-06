@@ -5,11 +5,11 @@ $employees = json_decode(file_get_contents($api_url), true);
 <!DOCTYPE html>
 <html>
 <head>
-  <title>HRM Frontend</title>
+  <title>Human Resource Management/title>
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
 </head>
 <body class="container mt-5">
-  <h2 class="mb-4">HRM Employee List</h2>
+  <h2 class="mb-4">Human Resource Management Employee List</h2>
 
   <table class="table table-striped">
     <thead><tr><th>ID</th><th>Name</th><th>Role</th><th>Actions</th></tr></thead>
