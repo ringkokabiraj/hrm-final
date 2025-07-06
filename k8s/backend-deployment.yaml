@@ -4,7 +4,7 @@ metadata:
   name: hrm-backend
   namespace: hrm
 spec:
-  replicas: 1
+  replicas: 2
   selector:
     matchLabels:
       app: hrm-backend
@@ -14,21 +14,15 @@ spec:
         app: hrm-backend
     spec:
       containers:
-       - name: backend
-      image: ringkokabiraj/hrm-backend:latest
-        ports:
-        - containerPort: 80
-      env:
-        - name: DB_HOST
-          value: "mysql"
-        - name: DB_USER
-          value: "root"
-        - name: DB_PASSWORD
-          value: "password"
-        - name: DB_NAME
-          value: "hrmdb"
-        - name: REDIS_HOST
-          value: "redis"
+        - name: backend
+          image: ringkokabiraj/hrm-backend:latest
+          ports:
+            - containerPort: 80
+          envFrom:
+            - configMapRef:
+                name: hrm-config
+            - secretRef:
+                name: hrm-secret
 ---
 apiVersion: v1
 kind: Service
@@ -39,6 +33,7 @@ spec:
   selector:
     app: hrm-backend
   ports:
-  - protocol: TCP
-    port: 80
-    targetPort: 8080
+    - protocol: TCP
+      port: 80
+      targetPort: 80
+  type: ClusterIP

@@ -14,19 +14,19 @@ spec:
         app: prometheus
     spec:
       containers:
-       - name: prometheus
-      image: prom/prometheus
-        args:
-        - "--config.file=/etc/prometheus/prometheus.yml"
-    ports:
-        - containerPort: 9090
-    volumeMounts:
+        - name: prometheus
+          image: prom/prometheus
+          args:
+            - "--config.file=/etc/prometheus/prometheus.yml"
+          ports:
+            - containerPort: 9090
+          volumeMounts:
+            - name: config-volume
+              mountPath: /etc/prometheus
+      volumes:
         - name: config-volume
-          mountPath: /etc/prometheus
-    volumes:
-      - name: config-volume
-        configMap:
-          name: prometheus-config
+          configMap:
+            name: prometheus-config
 ---
 apiVersion: v1
 kind: Service
@@ -36,7 +36,8 @@ metadata:
 spec:
   selector:
     app: prometheus
+  type: NodePort
   ports:
-  - port: 9090
-    targetPort: 9090
-    type: NodePort
+    - port: 9090
+      targetPort: 9090
+      nodePort: 30900  # Optional static nodePort

@@ -14,12 +14,12 @@ spec:
         app: loki
     spec:
       containers:
-      - name: loki
-        image: grafana/loki:2.9.2
-        ports:
-        - containerPort: 3100
-        args:
-        - -config.file=/etc/loki/local-config.yaml
+        - name: loki
+          image: grafana/loki:2.9.2
+          ports:
+            - containerPort: 3100
+          args:
+            - "-config.file=/etc/loki/local-config.yaml"
 ---
 apiVersion: v1
 kind: Service
@@ -29,8 +29,8 @@ metadata:
 spec:
   selector:
     app: loki
-  ports:
-  - port: 3100
-    targetPort: 3100
-    nodePort: 31000
   type: NodePort
+  ports:
+    - port: 3100
+      targetPort: 3100
+      nodePort: 31000  # You can change if port is in use
