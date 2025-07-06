@@ -35,7 +35,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'GET' && isset($_GET['id'])) {
     ];
 
     $context = stream_context_create($options);
-    $response = @file_get_contents("http://backend:8080/employees/$id", false, $context);
+    $response = @file_get_contents("http://backend:80/employees/$id", false, $context);
 
     if ($response !== false) {
         header("Location: /");

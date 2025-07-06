@@ -17,7 +17,7 @@
     <hr>
 
     <?php
-    $response = @file_get_contents("http://backend:8080/employees");
+    $response = @file_get_contents("http://backend:80/employees");
     $employees = json_decode($response, true);
 
     if ($employees && is_array($employees)) {
