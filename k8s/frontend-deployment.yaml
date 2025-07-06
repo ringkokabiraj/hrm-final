@@ -14,11 +14,11 @@ spec:
         app: hrm-frontend
     spec:
       containers:
-        - name: frontend
-          image: ringkokabiraj/hrm-frontend:latest
-          ports:
+          - name: frontend
+            image: ringkokabiraj/hrm-frontend:latest
+              ports:
             - containerPort: 80
-          envFrom:
+            envFrom:
             - configMapRef:
                 name: hrm-config
 ---
@@ -35,5 +35,5 @@ spec:
     - protocol: TCP
       port: 80
       targetPort: 80
-      nodePort: 30082  # Customize if needed
+      
 

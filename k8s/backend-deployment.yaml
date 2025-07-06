@@ -14,14 +14,14 @@ spec:
         app: hrm-backend
     spec:
       containers:
-        - name: backend
-          image: ringkokabiraj/hrm-backend:latest
-          ports:
+         - name: backend
+           image: ringkokabiraj/hrm-backend:latest
+           ports:
             - containerPort: 80
-          envFrom:
-            - configMapRef:
+              envFrom:
+              - configMapRef:
                 name: hrm-config
-            - secretRef:
+              - secretRef:
                 name: hrm-secret
 ---
 apiVersion: v1
@@ -36,4 +36,4 @@ spec:
     - protocol: TCP
       port: 80
       targetPort: 80
-  type: ClusterIP
+  type: NodePort

@@ -42,4 +42,3 @@ spec:
   ports:
     - port: 3000
       targetPort: 3000
-      nodePort: 30300  # Optional: change as needed
