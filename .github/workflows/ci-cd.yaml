@@ -40,11 +40,10 @@ jobs:
           context: ./backend
           push: true
           tags: ${{ env.IMAGE_NAME_BACKEND }}
-  implement:  # 👈 job ID must be lowercase (recommended)
+  implement:
     name: Deploy to Self-Hosted Kubernetes
-    needs: deploy  # 👈 refer to the job ID above
+    needs: build-and-push    # <== fix here
     runs-on: self-hosted
-
     steps:
       - name: Checkout code
         uses: actions/checkout@v3
@@ -57,7 +56,7 @@ jobs:
 
       - name: Deploy to Kubernetes
         run: |
-            set -e
-            kubectl apply -f k8s/
-            kubectl rollout status deployment/hrm-backend
-            kubectl rollout status deployment/hrm-frontend
+          set -e
+          kubectl apply -f k8s/
+          kubectl rollout status deployment/hrm-backend
+          kubectl rollout status deployment/hrm-frontend
