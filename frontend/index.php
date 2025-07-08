@@ -74,7 +74,7 @@ $employees = $employees ? json_decode($employees, true) : [];
 </header>
 
 <main>
-    <a class="button" href="add.php">➕ Add New Employee</a>
+    <a class="button" href="add.html">➕ Add New Employee</a>
 
     <table>
         <tr>

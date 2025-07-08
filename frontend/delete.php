@@ -1,16 +1,16 @@
 <?php
-if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['id'])) {
-    $id = $_POST['id'];
+if (isset($_GET['id'])) {
+    $id = $_GET['id'];
+    $apiBase = getenv('API_URL') ?: 'http://backend/employees';
 
     $options = [
         'http' => [
             'method' => 'DELETE',
-            'header' => 'Content-type: application/x-www-form-urlencoded'
         ]
     ];
 
     $context = stream_context_create($options);
-    $response = @file_get_contents("http://backend/employees/$id", false, $context);
+    $response = @file_get_contents("$apiBase/$id", false, $context);
 
     if ($response !== false) {
         header("Location: /");
