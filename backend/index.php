@@ -18,6 +18,7 @@ if ($path === '/employees' && $method === 'GET') {
     $json = json_encode($rows);
     $redis->set('employees', $json, 60);
     echo $json;
+
 } elseif ($path === '/employees' && $method === 'POST') {
     $name = $_POST['name'] ?? '';
     $role = $_POST['role'] ?? '';
@@ -26,9 +27,25 @@ if ($path === '/employees' && $method === 'GET') {
     $stmt->execute();
     $redis->del('employees');
     echo json_encode(["message" => "Employee added"]);
+
 } elseif (preg_match('#^/employees/(\d+)$#', $path, $matches)) {
     $id = (int)$matches[1];
-    if ($method === 'PUT') {
+
+    if ($method === 'GET') {
+        $stmt = $mysqli->prepare("SELECT * FROM employees WHERE id = ?");
+        $stmt->bind_param("i", $id);
+        $stmt->execute();
+        $result = $stmt->get_result();
+        $employee = $result->fetch_assoc();
+
+        if ($employee) {
+            echo json_encode($employee);
+        } else {
+            http_response_code(404);
+            echo json_encode(["error" => "Employee not found"]);
+        }
+
+    } elseif ($method === 'PUT') {
         parse_str(file_get_contents("php://input"), $_PUT);
         $name = $_PUT['name'] ?? '';
         $role = $_PUT['role'] ?? '';
@@ -37,8 +54,11 @@ if ($path === '/employees' && $method === 'GET') {
         $stmt->execute();
         $redis->del('employees');
         echo json_encode(["message" => "Updated"]);
+
     } elseif ($method === 'DELETE') {
-        $mysqli->query("DELETE FROM employees WHERE id = $id");
+        $stmt = $mysqli->prepare("DELETE FROM employees WHERE id = ?");
+        $stmt->bind_param("i", $id);
+        $stmt->execute();
         $redis->del('employees');
         echo json_encode(["message" => "Deleted"]);
     }
@@ -46,4 +66,3 @@ if ($path === '/employees' && $method === 'GET') {
     http_response_code(404);
     echo json_encode(["error" => "Not Found"]);
 }
-?>
