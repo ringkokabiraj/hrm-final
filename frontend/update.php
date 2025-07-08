@@ -2,7 +2,7 @@
 $apiBase = getenv('API_URL') ?: 'http://backend/employees';
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['id'])) {
-    // Handle update submission
+    // Submit updated data
     $id = $_POST['id'];
     $name = $_POST['name'];
     $role = $_POST['role'];
@@ -26,25 +26,33 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['id'])) {
     } else {
         echo "Update failed.";
     }
-} elseif (isset($_GET['id'])) {
-    // Display form for update
-    $id = $_GET['id'];
-    $employee = @file_get_contents("$apiBase/$id");
-    $employee = $employee ? json_decode($employee, true) : null;
 
-    if (!$employee) {
-        echo "Employee not found.";
+} elseif (isset($_GET['id'])) {
+    // Show edit form
+    $id = trim($_GET['id']);
+    $response = @file_get_contents("$apiBase/$id");
+
+    if ($response === false) {
+        echo "Employee not found. API call failed.";
         exit;
     }
+
+    $employee = json_decode($response, true);
+
+    if (!isset($employee['id'])) {
+        echo "Employee not found or invalid JSON returned.";
+        exit;
+    }
+
     ?>
 
     <!DOCTYPE html>
     <html>
     <head>
-        <title>Update Employee</title>
+        <title>Edit Employee</title>
     </head>
     <body>
-        <h2>Update Employee</h2>
+        <h2>Edit Employee</h2>
         <form method="POST" action="update.php">
             <input type="hidden" name="id" value="<?= htmlspecialchars($employee['id']) ?>">
             <label>Name:</label>
