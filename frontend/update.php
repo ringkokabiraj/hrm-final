@@ -1,5 +1,5 @@
 <?php
-$apiBase = getenv('API_URL') ?: 'http://backend/employees';
+$apiBase = getenv('API_URL') ?: 'http://backend:8080/employees';
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['id'])) {
     // Submit updated data
