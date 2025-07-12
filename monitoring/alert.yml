@@ -1,0 +1,10 @@
+groups:
+  - name: example-alert
+    rules:
+      - alert: InstanceDown
+        expr: up == 0
+        for: 1m
+        labels:
+          severity: critical
+        annotations:
+          description: "{{ $labels.instance }} is down"
