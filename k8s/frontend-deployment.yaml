@@ -21,6 +21,12 @@ spec:
           envFrom:
             - configMapRef:
                 name: hrm-config
+          volumeMounts:
+            - name: log-volume
+              mountPath: /var/log/hrm
+      volumes:
+        - name: log-volume
+          emptyDir: {}
 ---
 apiVersion: v1
 kind: Service

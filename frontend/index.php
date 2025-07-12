@@ -1,4 +1,14 @@
 <?php
+// === Access Logging ===
+$logFile = '/var/log/hrm/frontend_access.log';
+$timestamp = date('Y-m-d H:i:s');
+$ip = $_SERVER['REMOTE_ADDR'] ?? 'unknown';
+$uri = $_SERVER['REQUEST_URI'] ?? '';
+$method = $_SERVER['REQUEST_METHOD'] ?? '';
+$logEntry = "[$timestamp] $ip $method $uri\n";
+file_put_contents($logFile, $logEntry, FILE_APPEND);
+
+// === Fetch Employees via API ===
 $apiUrl = getenv('API_URL') ?: 'http://backend/employees';
 $employees = @file_get_contents($apiUrl);
 $employees = $employees ? json_decode($employees, true) : [];
