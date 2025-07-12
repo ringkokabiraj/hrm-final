@@ -1,0 +1,69 @@
+# Ignore Node, Composer, Python, Go, etc. if not used
+# This is tailored for PHP + Docker + Kubernetes
+
+# General
+.DS_Store
+Thumbs.db
+*.log
+*.env
+.env.*
+*.bak
+*.swp
+*.tmp
+*.pid
+
+# PHP
+/vendor/
+/composer.lock
+
+# Docker
+**/Dockerfile.*
+docker-compose.override.yml
+*.tar
+*.img
+
+# Frontend/Backend Builds (optional if generated)
+frontend/node_modules/
+frontend/vendor/
+frontend/.env
+frontend/.env.local
+backend/vendor/
+backend/.env
+backend/.env.local
+
+# Database
+db/*.sql
+db/*.db
+db/*.sqlite
+
+# Kubernetes
+*.kube/config
+k8s/*.yaml.bak
+k8s/*.tmp
+secrets.yaml
+k8s/secrets.yaml
+
+# GitHub Actions secrets (not committed)
+.github/secrets.env
+
+# IDEs and Editors
+.vscode/
+.idea/
+*.sublime-workspace
+*.sublime-project
+*.code-workspace
+
+# Logs
+logs/
+*.log
+*.out
+*.err
+
+# Prometheus/Grafana
+monitoring/*.yml~
+monitoring/prometheus_data/
+monitoring/grafana_data/
+
+# Misc
+*.tar.gz
+*.zip

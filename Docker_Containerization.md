@@ -119,7 +119,7 @@ API_URL=http://backend/employees
 
 # Grafana
 GF_SECURITY_ADMIN_USER=
-SECURITY_ADMIN_PASSWORD=securepassword123
+SECURITY_ADMIN_PASSWORD=
 🚀 How to Run
 Create .env file based on the above environment variables.
 
