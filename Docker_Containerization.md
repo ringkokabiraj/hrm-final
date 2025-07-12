@@ -11,7 +11,7 @@ prometheus	Monitoring service for metrics
 grafana	Dashboard service to visualize metrics
 loki	Logging backend used with Promtail
 
-🧱 Dockerfiles
+🧱 Dockerfiles 
 1. frontend/Dockerfile
 FROM php:8.1-apache
 COPY . /var/www/html/
